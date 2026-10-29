@@ -1,0 +1,14 @@
+{
+  "name": "job-radar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily remote-job radar: collects postings, scores them with Gemini against a candidate profile, emails the best ones (Google Apps Script)",
+  "scripts": {
+    "test": "node tests/filter.test.cjs",
+    "local": "node tools/local.cjs",
+    "deploy": "node tools/deploy.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

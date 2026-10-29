@@ -1,0 +1,7 @@
+node_modules/
+.clasp.json
+.clasprc.json
+
+# Never commit secrets
+.env
+src/Secrets.gs
