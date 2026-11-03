@@ -4,7 +4,7 @@
   "private": true,
   "description": "Daily remote-job radar: collects postings, scores them with Gemini against a candidate profile, emails the best ones (Google Apps Script)",
   "scripts": {
-    "test": "node tests/filter.test.cjs",
+    "test": "node tests/filter.test.cjs && node tests/digest.test.cjs",
     "local": "node tools/local.cjs",
     "deploy": "node tools/deploy.mjs"
   },

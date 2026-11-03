@@ -3,7 +3,9 @@ const CONFIG = {
   // Lite first: on 27/10 the full model was overloaded and one call hung for 5+ minutes.
   models: ['gemini-flash-lite-latest', 'gemini-flash-latest'], // the next one takes over when one is overloaded
   emailMinScore: 7,          // postings at or above this score go in the email
-  emailMaxItems: 12,
+  emailMaxItems: 20,
+  emailMinItems: 5,          // on slow days, near matches fill the email up to this many
+  nearMinScore: 4,           // near matches below this never reach the email
   maxCandidatesPerRun: 120,  // newest first; the rest wait for the next run
   batchSize: 25,             // postings per model call
   parallelCalls: 3,
