@@ -85,17 +85,18 @@ function runPipeline_(opts) {
     s.scoreErrors = s.scoreErrors.concat(scored.errors);
     const done = candidates.filter(j => scored.results[j.key]).map(j => ({ job: j, result: scored.results[j.key] }));
     done.sort((a, b) => b.result.score - a.result.score);
-    const matches = done.filter(m => m.result.score >= CONFIG.emailMinScore).slice(0, CONFIG.emailMaxItems);
-    const emailed = new Set(matches.map(m => m.job.key));
+    const { matches, near } = selectForDigest_(done);
+    const emailed = new Set(matches.concat(near).map(m => m.job.key));
     s.scored = done.length;
-    s.emailed = matches.length;
+    s.emailed = emailed.size;
+    if (near.length) s.note = [s.note, near.length + ' מהן קרובות (ציון ' + CONFIG.nearMinScore + '+)'].filter(Boolean).join(' · ');
 
     if (opts.dry) {
       s.top = done.slice(0, 40).map(m => m.result.score + ' | ' + m.result.track + ' | ' + m.job.title + ' | ' + m.job.company + ' | ' + m.result.reason_he);
       return s;
     }
     writeJobs_(done.map(m => jobRow_(m.job, m.result, emailed.has(m.job.key))));
-    sendDigest_(matches, s);
+    sendDigest_(matches, near, s);
     logRun_(s);
     return s;
   } catch (e) {
